@@ -1,2 +1,2 @@
-# Azure-Rest-API
-Azure Rest API Examples
+# Microsoft Azure
+Microsoft Azure Examples
