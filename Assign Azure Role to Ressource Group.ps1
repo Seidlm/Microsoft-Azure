@@ -65,8 +65,6 @@ $GRAPHheaders = @{
 
 
 
-
-
 #Get Role Defintion from Azure
 $URL="https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$RessourceGroupName/providers/Microsoft.Authorization/roleDefinitions?`$filter=roleName eq '$Role'&api-version=$apiversion"
 $Roles=Invoke-RestMethod -Method GET -Uri $URL -Headers $headers

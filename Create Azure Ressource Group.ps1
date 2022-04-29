@@ -41,9 +41,6 @@ $headers = @{
   "Content-type"  = "application/json"
 }
 
-
-
-
 $URL = "https://management.azure.com/subscriptions/$subscriptionId/resourceGroups/$($RessourceGroupName)?api-version=$apiversion"
 
 $bodyNewRessourceGroup = @"
@@ -54,7 +51,6 @@ $bodyNewRessourceGroup = @"
 
 
 Invoke-RestMethod -Method PUT -URI $URL -headers $headers -body $bodyNewRessourceGroup
-
 
 
 ### Get Status
