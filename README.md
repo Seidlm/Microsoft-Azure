@@ -8,3 +8,6 @@ Microsoft Azure Examples
 
 # Create Resource Group
     https://www.techguy.at/create-azure-resource-group-with-powershell-and-ms-graph-ap
+
+# Remove Resource Group
+    https://www.techguy.at/remove-azure-resource-group-with-powershell-and-ms-graph-api/
