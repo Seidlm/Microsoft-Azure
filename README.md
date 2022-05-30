@@ -11,3 +11,6 @@ Microsoft Azure Examples
 
 # Remove Resource Group
     https://www.techguy.at/remove-azure-resource-group-with-powershell-and-ms-graph-api/
+
+# Assign Azure Role to Resource Group
+    https://www.techguy.at/assign-a-user-to-an-azure-resource-group-role-with-powershell-and-ms-graph-api/

@@ -9,7 +9,6 @@ $secret = 'your Secret'
 $subscriptionId = 'your Subscription ID'
 
 
-
 #RessourceGroupName Details
 $RessourceGroupName = "RG_TEST_RessourceGroup"
 
