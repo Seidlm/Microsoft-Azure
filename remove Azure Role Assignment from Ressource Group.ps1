@@ -13,13 +13,11 @@ $subscriptionId = 'your Subscription ID'
 #RessourceGroupName Details
 $RessourceGroupName = "RG_TEST_RessourceGroup"
 
-
 #Role see #https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
 $Role = "Owner" 
 
 #User to be granted the Role
 $User = "michael@techguy.at"
-
 
 #API Version
 $apiversion = "2015-07-01"

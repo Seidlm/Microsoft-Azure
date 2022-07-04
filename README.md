@@ -17,3 +17,6 @@ Microsoft Azure Examples
 
 # Monitor your Azure Secrets, Zerts and SPN's Expire Date with PowerShell
     https://www.techguy.at/monitor-your-azure-secrets-zerts-and-spns-expire-date-with-powershell/
+
+# Remove Azure Role from Resource Group
+    https://www.techguy.at/remove-a-user-from-an-azure-resource-group-role-with-powershell-and-azure-rest-api/
