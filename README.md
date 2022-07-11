@@ -20,3 +20,10 @@ Microsoft Azure Examples
 
 # Remove Azure Role from Resource Group
     https://www.techguy.at/remove-a-user-from-an-azure-resource-group-role-with-powershell-and-azure-rest-api/
+
+# New Azure App Reg
+    https://www.techguy.at/create-an-azure-app-registration-with-powershell-and-ms-graph-api/
+
+# Add Owner to Azure App Reg
+    https://www.techguy.at/add-an-owner-to-an-azure-application-registration-with-powershell-and-ms-graph-api
+
