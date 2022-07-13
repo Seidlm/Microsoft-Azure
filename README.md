@@ -27,3 +27,8 @@ Microsoft Azure Examples
 # Add Owner to Azure App Reg
     https://www.techguy.at/add-an-owner-to-an-azure-application-registration-with-powershell-and-ms-graph-api
 
+# Add Secret to Azure App Reg
+    https://www.techguy.at/add-a-secret-to-an-azure-application-registration-with-powershell-and-ms-graph-api
+
+# Remove Secret from Azure App Reg
+    https://www.techguy.at/delete-a-secret-from-an-azure-application-registration-with-powershell-and-ms-graph-api
