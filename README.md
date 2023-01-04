@@ -32,3 +32,10 @@ Microsoft Azure Examples
 
 # Remove Secret from Azure App Reg
     https://www.techguy.at/delete-a-secret-from-an-azure-application-registration-with-powershell-and-ms-graph-api
+
+# Add API Permissions to Azure App Reg
+    https://www.techguy.at/add-api-permission-to-azure-application-registration-with-powershell-and-ms-graph-api
+
+# Control Azure VM
+    https://www.techguy.at/control-azure-vm-with-powershell-and-azure-rest-api
+    
