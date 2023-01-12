@@ -10,7 +10,6 @@
 $MSGRAPHAPI_clientID = 'yourClientID'
 $MSGRAPHAPI_tenantId = 'yourTenantID'
 $MSGRAPHAPI_Clientsecret = 'yourSecret'
-
 $MSGRAPHAPI_BaseURL = "https://graph.microsoft.com/v1.0"
 
 
@@ -50,15 +49,12 @@ $GetIDfromName_Params = @{
 $GetIDfromName_Result = Invoke-RestMethod @GetIDfromName_Params
 
 
-
-
 #Get Secret from App
 $GetSecretAppReg_Params = @{
     Method = "GET"
     Uri    = "$MSGRAPHAPI_BaseURL/applications/$($GetIDfromName_Result.value.id)"
     header = $MSGRAPHAPI_headers
 }
-
 
 $GetSecret_Result = Invoke-RestMethod @GetSecretAppReg_Params
 

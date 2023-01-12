@@ -10,7 +10,6 @@
 $MSGRAPHAPI_clientID = 'yourClientID'
 $MSGRAPHAPI_tenantId = 'yourTenantID'
 $MSGRAPHAPI_Clientsecret = 'yourSecret'
-
 $MSGRAPHAPI_BaseURL = "https://graph.microsoft.com/v1.0"
 
 
@@ -19,7 +18,6 @@ $MSGRAPHAPI_BaseURL = "https://graph.microsoft.com/v1.0"
 #Enter Azure App Details
 $AzureAppName = "TestApp1"
 $AzureAppAccountType = "AzureADMyOrg" #https://docs.microsoft.com/en-us/azure/active-directory/develop/reference-app-manifest#signinaudience-attribute
-
 
 
 

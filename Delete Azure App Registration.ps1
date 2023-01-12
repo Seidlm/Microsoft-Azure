@@ -1,4 +1,4 @@
-# Reference: https://docs.microsoft.com/en-us/graph/api/application-addpassword?view=graph-rest-1.0&tabs=http
+# Reference: https://docs.microsoft.com/en-us/graph/api/application-post-applications?view=graph-rest-1.0&tabs=http
 
 #Application Permission:
 #- Application.ReadWrite.OwnedBy
@@ -13,11 +13,10 @@ $MSGRAPHAPI_Clientsecret = 'yourSecret'
 $MSGRAPHAPI_BaseURL = "https://graph.microsoft.com/v1.0"
 
 
+
+
 #Enter Azure App Details
 $AzureAppName = "TestApp1"
-$SecretDescription="Secret1"
-$SecretDurationInMonth=24
-
 
 
 #Auth MS Graph API and Get Header
@@ -35,38 +34,28 @@ $MSGRAPHAPI_headers = @{
 
 
 
-
-
-#Get Appi from App Name
-$GetIDfromName_Params = @{
+#Find API ID by Name
+$FindAzureAppReg_Params = @{
     Method = "GET"
     Uri    = "$MSGRAPHAPI_BaseURL/applications?`$filter=displayName eq '$AzureAppName'"
     header = $MSGRAPHAPI_headers
-}        
+}
 
-$GetIDfromName_Result = Invoke-RestMethod @GetIDfromName_Params
+#Store App ID in the Variable
+$Result = Invoke-RestMethod @FindAzureAppReg_Params
 
 
-#Add Secret to App
-$AddSecretToAppReg_Body = @"
-    {
-        "passwordCredential": {
-            "displayName": "$SecretDescription",
-            "endDateTime": "$(Get-Date -format o (Get-Date).AddMonths($SecretDurationInMonth))"
-        }
-    }
-"@
 
-$AddSecretToAppReg_Params = @{
-    Method = "POST"
-    Uri    = "$MSGRAPHAPI_BaseURL/applications/$($GetIDfromName_Result.value.id)/addPassword"
+#Delete Azure App Reg
+$DeleteAzureAppReg_Params = @{
+    Method = "DELETE"
+    Uri    = "$MSGRAPHAPI_BaseURL/applications/$($Result.value.id)"
     header = $MSGRAPHAPI_headers
-    Body   = $AddSecretToAppReg_Body
 }
 
 
-$AddSecretToAppReg_Result = Invoke-RestMethod @AddSecretToAppReg_Params
+$Result = Invoke-RestMethod @DeleteAzureAppReg_Params
 
 
-#Secret
-$AddSecretToAppReg_Result.secretText
+
+
