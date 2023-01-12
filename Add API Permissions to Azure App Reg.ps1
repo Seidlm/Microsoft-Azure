@@ -1,5 +1,5 @@
 # Reference: https://docs.microsoft.com/en-us/graph/api/application-post-applications?view=graph-rest-1.0&tabs=http
-# ReferencE: https://docs.microsoft.com/en-us/graph/api/serviceprincipal-list?view=graph-rest-1.0&tabs=http
+# Reference: https://docs.microsoft.com/en-us/graph/api/serviceprincipal-list?view=graph-rest-1.0&tabs=http
 
 
 
@@ -15,30 +15,18 @@
 $MSGRAPHAPI_clientID = 'yourClientID'
 $MSGRAPHAPI_tenantId = 'yourTenantID'
 $MSGRAPHAPI_Clientsecret = 'yourSecret'
-
 $MSGRAPHAPI_BaseURL = "https://graph.microsoft.com/v1.0"
 
 
 
 
 #Enter Azure App Details
-$AzureAppName = "Appau2mator5"
+$AzureAppName = "TestApp1"
 $APIName = "Microsoft Graph" #See Code Example below to get a List of AppiNames
 $ApplicationPermission = @("Mail.Send", "Mail.ReadWrite")
 $DelegatedPermission = @("Mail.Send", "Mail.Send.Shared")
 
-#Example
-#$APIName = "Azure DevOps"
-#$ApplicationPermission = @()
-#$DelegatedPermission = @("user_impersonation")
 
-
-#Build Array
-try { [array]$ApplicationPermission = $ApplicationPermission.split(",") }
-catch { [array]$ApplicationPermission = $ApplicationPermission }
-
-try { [array]$DelegatedPermission = $DelegatedPermission.split(",") }
-catch { [array]$DelegatedPermission = $DelegatedPermission }
 
 
 #Auth MS Graph API and Get Header
@@ -56,8 +44,16 @@ $MSGRAPHAPI_headers = @{
 }
 
 
+#Build Array
+try { [array]$ApplicationPermission = $ApplicationPermission.split(",") }
+catch { [array]$ApplicationPermission = $ApplicationPermission }
 
-#Get Appi from App Name
+try { [array]$DelegatedPermission = $DelegatedPermission.split(",") }
+catch { [array]$DelegatedPermission = $DelegatedPermission }
+
+
+
+#Get APP ID from App Name
 $GetIDfromName_Params = @{
     Method = "GET"
     Uri    = "$MSGRAPHAPI_BaseURL/applications?`$filter=displayName eq '$AzureAppName'"
@@ -65,22 +61,17 @@ $GetIDfromName_Params = @{
 }        
 
 $GetIDfromName_Result = Invoke-RestMethod @GetIDfromName_Params
-
-
-#App ID
 $GetIDfromName_Result.value.id
 
+#API ID
 $GetAPIID_Params = @{
     Method = "GET"
     Uri    = "$MSGRAPHAPI_BaseURL/servicePrincipals?`$filter=displayName eq '$APIName'"
     header = $MSGRAPHAPI_headers
 }       
-
-
 $GetAPIID_Result = Invoke-RestMethod @GetAPIID_Params
-
-#Api ID
 $GetAPIID_Result.value.id
+
 
 #Get API Persmission Details
 $GetSPPermissions_Params = @{
@@ -169,7 +160,7 @@ $SetPermissions_Params = @{
 
 
 
-#Invoke and wait
+#Invoke
 Invoke-RestMethod @SetPermissions_Params
 
 
