@@ -26,12 +26,40 @@ $headers = @{
     "Content-type"  = "application/json"
 }
 
+
+
+#functions
+function Get-AzureResourcePaging {
+    param (
+        $URL,
+        $AuthHeader
+    )
+ 
+    # List Get all Apps from Azure
+
+    $Response = Invoke-RestMethod -Method GET -Uri $URL -Headers $AuthHeader
+    $Resources = $Response.value
+
+    $ResponseNextLink = $Response."@odata.nextLink"
+    while ($ResponseNextLink -ne $null) {
+
+        $Response = (Invoke-RestMethod -Uri $ResponseNextLink -Headers $AuthHeader -Method Get)
+        $ResponseNextLink = $Response."@odata.nextLink"
+        $Resources += $Response.value
+    }
+    return $Resources
+}
+
+
 #Get all Enterprise Apps
 $URLGetApplications = "$BaseURL/applications"
 
-$Applications = Invoke-RestMethod -Method GET -Uri $URLGetApplications -Headers $headers
+$Applications = Get-AzureResourcePaging -URL $URLGetApplications -AuthHeader $headers
 
-foreach ($App in $Applications.value) {
+
+
+
+foreach ($App in $Applications) {
     #Get Sign In/Usage
     $SignIns = Invoke-RestMethod -Method GET  -Uri "https://graph.microsoft.com/v1.0/auditLogs/signIns?`$filter=appid eq '$($App.appId)' and createdDateTime gt $TimeFrameDate" -Headers $headers
     
