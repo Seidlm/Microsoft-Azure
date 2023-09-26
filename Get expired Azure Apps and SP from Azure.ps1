@@ -44,6 +44,28 @@ $MAIL_headers = @{
 }
 
 
+#functions
+function Get-AzureResourcePaging {
+    param (
+        $URL,
+        $AuthHeader
+    )
+ 
+    # List Get all Apps from Azure
+
+    $Response = Invoke-RestMethod -Method GET -Uri $URL -Headers $AuthHeader
+    $Resources = $Response.value
+
+    $ResponseNextLink = $Response."@odata.nextLink"
+    while ($ResponseNextLink -ne $null) {
+
+        $Response = (Invoke-RestMethod -Uri $ResponseNextLink -Headers $AuthHeader -Method Get)
+        $ResponseNextLink = $Response."@odata.nextLink"
+        $Resources += $Response.value
+    }
+    return $Resources
+}
+
 
 #Build Array to store PSCustomObject
 $Array = @()
@@ -52,12 +74,11 @@ $Array = @()
 
 # List Get all Apps from Azure
 $URLGetApps = "https://graph.microsoft.com/v1.0/applications"
-$AllApps = Invoke-RestMethod -Method GET -Uri $URLGetApps -Headers $EXPIRE_headers
-
+$AllApps = Get-AzureResourcePaging -URL $URLGetApps -AuthHeader $EXPIRE_headers
 
 
 #Go through each App and add to our Array
-foreach ($App in $AllApps.value) {
+foreach ($App in $AllApps) {
 
     $URLGetApp = "https://graph.microsoft.com/v1.0/applications/$($App.ID)"
     $App = Invoke-RestMethod -Method GET -Uri $URLGetApp -Headers $EXPIRE_headers
@@ -97,17 +118,8 @@ foreach ($App in $AllApps.value) {
 
 #Get all Service Principals
 $servicePrincipals = "https://graph.microsoft.com/v1.0/servicePrincipals"
-$SP = Invoke-RestMethod -Method GET -Uri $servicePrincipals -Headers $EXPIRE_headers
+$SPList = Get-AzureResourcePaging -URL $servicePrincipals -AuthHeader $EXPIRE_headers
 
-$SPList = $SP.value 
-$UserNextLink = $SP."@odata.nextLink"
-
-while ($UserNextLink -ne $null) {
-
-    $SP = (Invoke-RestMethod -Uri $UserNextLink -Headers $EXPIRE_headers -Method Get )
-    $UserNextLink = $SP."@odata.nextLink"
-    $SPList += $SP.value
-}
 
 #Go through each SP and add to our Array
 foreach ($SAML in $SPList) {
