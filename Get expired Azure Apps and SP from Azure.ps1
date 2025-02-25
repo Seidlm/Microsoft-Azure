@@ -1,7 +1,7 @@
 #Settings
-$TimeSpanInDays=90
-$MailSender="Mail Sender Mail"
-$MailRecipient="Mail Recipient Mail"
+$TimeSpanInDays = 90
+$MailSender = "Mail Sender Mail"
+$MailRecipient = "Mail Recipient Mail"
 
 #Azure App Credentials to get Apps and SP
 $EXPIRE_AppId = "your EXPIRE APP Client ID"
@@ -12,6 +12,11 @@ $tenantID = "Azure Tenant ID"
 #Azure App Credentials to send the Mail
 $MAIL_AppId = "your Mail Client ID"
 $MAIL_secret = "your Mail Secret"
+
+#ExcludeList
+$ExcludedList = "*(Power Virtual Agents);*(Microsoft Copilot Studio);RSC-CAM-Einfahrt"
+$ExcludedListArray = $ExcludedList -split ";"
+
 
 #STOP HERE!
 
@@ -50,7 +55,7 @@ function Get-AzureResourcePaging {
         $URL,
         $AuthHeader
     )
- 
+
     # List Get all Apps from Azure
 
     $Response = Invoke-RestMethod -Method GET -Uri $URL -Headers $AuthHeader
@@ -96,7 +101,7 @@ foreach ($App in $AllApps) {
             }
         }
     }
-    
+
 
     if ($App.keyCredentials) {
         foreach ($item in $App.keyCredentials) {
@@ -143,11 +148,22 @@ foreach ($SAML in $SPList) {
 $ExpireringZerts = $Array | Where-Object -Property Secret-EndDate -Value (Get-Date).AddDays($TimeSpanInDays) -lt  | Where-Object -Property Secret-EndDate -Value (Get-Date) -gt
 
 foreach ($Zert in $ExpireringZerts) {
-    $HTML = $Zert | Convertto-HTML -Fragment -As List
+    $Exclude = $False
+    foreach ($Entry in $ExcludedListArray) {
+        if ($Zert.displayName -like $Entry) {
+            $Exclude = $True
+        }
+    }
+    if ($Exclude) {
+        #do nothing
+    }
+    else {
 
-    $URLsend = "https://graph.microsoft.com/v1.0/users/$MailSender/sendMail"
-    
-    $BodyJsonsend = @"
+        $HTML = $Zert | Convertto-HTML -Fragment -As List
+
+        $URLsend = "https://graph.microsoft.com/v1.0/users/$MailSender/sendMail"
+
+        $BodyJsonsend = @"
                         {
                             "message": {
                               "subject": "Azure App or SPN will expire soon $($Zert.displayName)",
@@ -171,6 +187,7 @@ foreach ($Zert in $ExpireringZerts) {
                             "saveToSentItems": "false"
                           }
 "@
-    
-    Invoke-RestMethod -Method POST -Uri $URLsend -Headers $MAIL_headers -Body $BodyJsonsend
+
+        Invoke-RestMethod -Method POST -Uri $URLsend -Headers $MAIL_headers -Body $BodyJsonsend
+    }
 }
