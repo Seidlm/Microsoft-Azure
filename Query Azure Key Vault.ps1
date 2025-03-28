@@ -1,6 +1,7 @@
 <#
 This is an example on using a single function to get Azure Key Vault Secrets via Azure Autoamtion in the Cloud, OnPrem or Hybrid.
 All is done without a single PS Module and with the corresponding endpoints Microsoft is providing for Managed Identities and Service Principals.
+Details: https://www.techguy.at/using-azure-key-vault-to-store-your-azure-automation-credentials-and-secrets/
 #>
 
 

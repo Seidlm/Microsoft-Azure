@@ -2,6 +2,8 @@
 Microsoft Azure Examples
 
 
+# Query Azure Key Vault
+    https://www.techguy.at/using-azure-key-vault-to-store-your-azure-automation-credentials-and-secrets/
 
 # Create Azure Guest User
     https://www.techguy.at/create-azure-guest-user-with-powershell-and-ms-graph-api/
